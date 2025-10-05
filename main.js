@@ -24,6 +24,26 @@ buttons.forEach(button => {
     });
 });
 
+// 🔹 Обробка натискань клавіш клавіатури
+document.addEventListener("keydown", (e) => {
+    const key = e.key;
+
+    if (!isNaN(key) || key === "," || key === ".") {
+        handleNumber(key === "," ? "." : key);
+    } else if (["+", "-", "*", "/"].includes(key)) {
+        handleOperator(key);
+    } else if (key === "Enter" || key === "=") {
+        e.preventDefault();
+        calculate();
+    } else if (key === "Escape" || key.toLowerCase() === "c") {
+        clear();
+    } else if (key === "Backspace") {
+        handleBackspace();
+    }
+
+    updateDisplay();
+});
+
 function handleNumber(value) {
     if (resetNext) {
         currentInput = "";
@@ -76,6 +96,12 @@ function clear() {
     operator = null;
     resetNext = false;
     result.value = "0";
+}
+
+function handleBackspace() {
+    if (!resetNext && currentInput.length > 0) {
+        currentInput = currentInput.slice(0, -1);
+    }
 }
 
 function updateDisplay() {
