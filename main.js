@@ -11,11 +11,10 @@
       firstOperand: null,
       operator: null,
       waitingForSecondOperand: false,
-      lastDecimalChar: null, // Пам'ятаємо, який розділювач десяткових використав користувач (',' або '.')
+      lastDecimalChar: null, 
     };
 
     function updateDisplay() {
-      // Підтримує як <div>, так і <input>
       if ("value" in displayEl) {
         displayEl.value = state.displayValue;
       }
@@ -65,17 +64,16 @@
     }
 
     function parseNumber(str) {
-      // Нормалізуємо коми до крапок для парсингу
       return parseFloat(str.replace(",", "."));
     }
 
     function removeTrailingZeros(num) {
-      // Запобігаємо артефактам з плаваючою комою
+    
       let s = Number(num.toPrecision(12)).toString();
       if (s.includes("e") || s.includes("E")) {
         s = num.toFixed(12);
       }
-      // Приберемо зайві нулі в кінці і можливу крапку
+    
       s = s.replace(/\.?0+$/, "");
       if (s === "" || s === "-0") s = "0";
       return s;
@@ -116,7 +114,7 @@
     function handleOperator(op) {
       const inputValue = parseNumber(state.displayValue);
 
-      // Якщо оператор натиснуто поспіль — просто замінити на новий, не рахуючи
+      
       if (state.operator && state.waitingForSecondOperand) {
         state.operator = op;
         return;
@@ -148,7 +146,7 @@
       updateDisplay();
     }
 
-    // Обробка кліків по кнопках
+   
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
         const value = btn.getAttribute("data-value") || btn.textContent.trim();
@@ -175,11 +173,11 @@
           return;
         }
 
-        // Інші кнопки (якщо є) ігноруємо
+       
       });
     });
 
-    // Підтримка клавіатури
+    
     document.addEventListener("keydown", (e) => {
       const key = e.key;
 
@@ -221,11 +219,10 @@
       }
     });
 
-    // Початкове відображення
     updateDisplay();
   }
 
-  // Шукаємо елементи максимально "гнучко", щоб підійшло до різної верстки
+  
   function findDisplayElement() {
     const candidates = [
       "[data-display]",
