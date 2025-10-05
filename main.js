@@ -24,7 +24,6 @@ buttons.forEach(button => {
     });
 });
 
-// 🔹 Обробка натискань клавіш клавіатури
 document.addEventListener("keydown", (e) => {
     const key = e.key;
 
